@@ -4,24 +4,26 @@ import csv
 import sys
 
 rawcsv = sys.argv[1]
+uid_field_num = 72
+uidlist = []
 
 def csv_get_data(csvfile):
     try:
         f = open(csvfile, 'rb')
-        content = csv.reader(f)
-        rownum = 0
-        for row in content:
-            if rownum == 0:
-                header = row
-            else:
-                colnum = 0
-                for col in row:
-                    print '%-8s: %s' % (header[colnum], col)
-                    colnum += 1
-            rownum += 1
-        f.close()
     except:
         print "Can't open report file"
         exit(0)
+    content = csv.reader(f)
+    rownum = 0
+    for row in content:
+        if rownum == 0:
+            header = row
+        else:
+            #print row[uid_field_num]
+            uidlist.append(row[uid_field_num])
+        rownum += 1
+    f.close()
+    return uidlist
+
 
 csv_get_data(rawcsv)
